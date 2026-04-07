@@ -1,0 +1,109 @@
+<footer class="site-footer section-card">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand">
+      <p class="site-footer__heading">{{ section.settings.heading | default: shop.name }}</p>
+
+      {% if section.settings.subtext != blank %}
+        <div class="site-footer__subtext text-muted">{{ section.settings.subtext }}</div>
+      {% endif %}
+    </div>
+
+    <div class="site-footer__links">
+      {% for link in section.settings.menu.links %}
+        {{ link.title | link_to: link.url }}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <div class="site-footer__copyright text-muted">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}
+    </div>
+
+    <div class="site-footer__payment">
+      {% if section.settings.show_payment_icons %}
+        {% for type in shop.enabled_payment_types %}
+          {{ type | payment_type_svg_tag }}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% stylesheet %}
+  .site-footer {
+    margin-block: 2rem;
+    padding: 2rem;
+  }
+  .site-footer a {
+    text-decoration: none;
+    color: var(--color-foreground);
+  }
+  .site-footer__grid,
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .site-footer__grid {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-foreground-border);
+  }
+  .site-footer__heading {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .site-footer__subtext {
+    max-width: 42ch;
+  }
+  .site-footer__links,
+  .site-footer__payment {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .site-footer__payment svg {
+    width: 2rem;
+  }
+  @media (max-width: 749px) {
+    .site-footer,
+    .site-footer__grid,
+    .site-footer__bottom {
+      flex-direction: column;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Stunner Marketplace"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "<p>Curated products, sharp storytelling, and a storefront designed to feel premium from the first click.</p>"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "t:labels.show_payment_icons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

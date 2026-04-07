@@ -1,0 +1,190 @@
+<header class="site-header{% if section.settings.show_divider %} site-header--bordered{% endif %}">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a class="site-header__brand-link" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {% if section.settings.logo %}
+          {{
+            section.settings.logo
+            | image_url: width: section.settings.logo_width
+            | image_tag:
+              widths: '120, 180, 240, 320',
+              width: section.settings.logo_width,
+              alt: shop.name,
+              class: 'site-header__logo'
+          }}
+        {% else %}
+          <span class="site-header__title">{{ shop.name }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+    <nav class="site-header__menu" aria-label="Primary">
+      {% for link in section.settings.menu.links %}
+        {{ link.title | link_to: link.url }}
+      {% endfor %}
+    </nav>
+
+    <div class="site-header__actions">
+      {% if shop.customer_accounts_enabled %}
+        <shopify-account class="site-header__icon-link" menu="{{ section.settings.customer_account_menu }}">
+          {{ 'icon-account.svg' | inline_asset_content }}
+        </shopify-account>
+      {% endif %}
+
+      <a class="site-header__icon-link" href="{{ routes.cart_url }}" aria-label="Cart">
+        {% if cart.item_count > 0 %}
+          <sup>{{ cart.item_count }}</sup>
+        {% endif %}
+
+        {{ 'icon-cart.svg' | inline_asset_content }}
+      </a>
+    </div>
+  </div>
+</header>
+
+{% stylesheet %}
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    backdrop-filter: blur(20px);
+    background: var(--color-background-soft);
+  }
+
+  .site-header--bordered {
+    border-bottom: 1px solid var(--color-foreground-border);
+  }
+
+  .site-header__inner {
+    min-height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .site-header a,
+  .site-header shopify-account {
+    position: relative;
+    text-decoration: none;
+    color: var(--color-foreground);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .site-header__brand-link {
+    justify-content: flex-start;
+  }
+
+  .site-header__title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .site-header__logo {
+    width: auto;
+    max-height: 56px;
+    object-fit: contain;
+  }
+
+  .site-header a sup {
+    position: absolute;
+    top: -0.35rem;
+    right: -0.45rem;
+    display: inline-flex;
+    min-width: 1.15rem;
+    min-height: 1.15rem;
+    padding-inline: 0.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: var(--color-accent-contrast);
+    font-size: 0.7rem;
+  }
+
+  .site-header svg {
+    width: 1.5rem;
+  }
+
+  .site-header__menu,
+  .site-header__actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .site-header__menu {
+    flex: 1 1 auto;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .site-header__menu a {
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+  }
+
+  .site-header__icon-link {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-foreground-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+  }
+
+  @media (max-width: 749px) {
+    .site-header__inner {
+      flex-wrap: wrap;
+      padding-block: 1rem;
+    }
+
+    .site-header__menu {
+      order: 3;
+      width: 100%;
+      justify-content: flex-start;
+      overflow-x: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 180
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "t:labels.customer_account_menu",
+      "default": "customer-account-main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

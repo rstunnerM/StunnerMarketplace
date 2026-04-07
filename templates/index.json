@@ -1,0 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "blocks": {
+        "highlight_1": {
+          "type": "highlight",
+          "settings": {
+            "title": "Premium layout",
+            "text": "Balanced whitespace, clear hierarchy, and flexible content blocks."
+          }
+        },
+        "highlight_2": {
+          "type": "highlight",
+          "settings": {
+            "title": "Story-led merchandising",
+            "text": "Lead with campaigns, collections, and launch narratives instead of placeholders."
+          }
+        },
+        "highlight_3": {
+          "type": "highlight",
+          "settings": {
+            "title": "Editor friendly",
+            "text": "Everything here is configurable directly inside the Shopify customizer."
+          }
+        }
+      },
+      "block_order": [
+        "highlight_1",
+        "highlight_2",
+        "highlight_3"
+      ],
+      "settings": {
+        "eyebrow": "New season, sharper storefront",
+        "heading": "Build a storefront that feels custom from the first scroll.",
+        "text": "<p>Use Shopify's Skeleton theme as a clean base, then shape the homepage around your product story, merchandising priorities, and brand voice.</p>",
+        "primary_label": "Shop now",
+        "secondary_label": "Explore collections"
+      }
+    }
+  },
+  "order": [
+    "hero"
+  ]
+}
