@@ -40,15 +40,148 @@
         "highlight_3"
       ],
       "settings": {
-        "eyebrow": "New season, sharper storefront",
-        "heading": "Build a storefront that feels custom from the first scroll.",
-        "text": "<p>Use Shopify's Skeleton theme as a clean base, then shape the homepage around your product story, merchandising priorities, and brand voice.</p>",
+        "eyebrow": "Editorial design, built to sell",
+        "heading": "A sleek modern storefront with stronger product storytelling.",
+        "text": "<p>Shape your homepage like a premium campaign: lead with a powerful hero, highlight trusted shopping benefits, and guide customers into featured collections and products.</p>",
         "primary_label": "Shop now",
-        "secondary_label": "Explore collections"
+        "secondary_label": "View featured products"
+      }
+    },
+    "trust": {
+      "type": "trust-strip",
+      "blocks": {
+        "trust_1": {
+          "type": "item",
+          "settings": {
+            "heading": "Fast shipping",
+            "text": "Quick order processing and dependable fulfillment."
+          }
+        },
+        "trust_2": {
+          "type": "item",
+          "settings": {
+            "heading": "30-day returns",
+            "text": "A cleaner guarantee that reduces purchase hesitation."
+          }
+        },
+        "trust_3": {
+          "type": "item",
+          "settings": {
+            "heading": "Secure checkout",
+            "text": "Trusted payment methods with a friction-free purchase path."
+          }
+        },
+        "trust_4": {
+          "type": "item",
+          "settings": {
+            "heading": "Curated assortment",
+            "text": "A tighter collection strategy for a more premium shop feel."
+          }
+        }
+      },
+      "block_order": [
+        "trust_1",
+        "trust_2",
+        "trust_3",
+        "trust_4"
+      ],
+      "settings": {
+        "eyebrow": "Why customers stay",
+        "heading": "Premium details that make the shop feel more established.",
+        "text": "<p>Pair strong design with practical reassurance so customers trust the storefront as quickly as they admire it.</p>"
+      }
+    },
+    "collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_1": {
+          "type": "collection",
+          "settings": {
+            "kicker": "New arrivals",
+            "fallback_title": "New arrivals",
+            "fallback_text": "Show the freshest collection with clean imagery and a stronger entry point."
+          }
+        },
+        "collection_2": {
+          "type": "collection",
+          "settings": {
+            "kicker": "Best sellers",
+            "fallback_title": "Best sellers",
+            "fallback_text": "Merchandise the products already proving demand."
+          }
+        },
+        "collection_3": {
+          "type": "collection",
+          "settings": {
+            "kicker": "Seasonal picks",
+            "fallback_title": "Seasonal picks",
+            "fallback_text": "Build a campaign-style section around timely inventory or themed edits."
+          }
+        }
+      },
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3"
+      ],
+      "settings": {
+        "eyebrow": "Shop the edit",
+        "heading": "Collections that make the homepage feel like a real store.",
+        "text": "<p>Use these cards to lead visitors into your strongest categories without overwhelming the page.</p>",
+        "link_label": "Browse all products"
+      }
+    },
+    "products": {
+      "type": "featured-products",
+      "blocks": {
+        "product_1": {
+          "type": "product",
+          "settings": {
+            "fallback_title": "Hero product",
+            "fallback_text": "Feature your most important SKU with stronger hierarchy and a cleaner CTA."
+          }
+        },
+        "product_2": {
+          "type": "product",
+          "settings": {
+            "fallback_title": "Bestseller product",
+            "fallback_text": "Highlight proven performers with a premium product-card treatment."
+          }
+        },
+        "product_3": {
+          "type": "product",
+          "settings": {
+            "fallback_title": "Seasonal product",
+            "fallback_text": "Use this slot for timely inventory, bundles, or a launch item."
+          }
+        },
+        "product_4": {
+          "type": "product",
+          "settings": {
+            "fallback_title": "Editor pick",
+            "fallback_text": "Round out the grid with a hand-picked product or margin leader."
+          }
+        }
+      },
+      "block_order": [
+        "product_1",
+        "product_2",
+        "product_3",
+        "product_4"
+      ],
+      "settings": {
+        "eyebrow": "Featured now",
+        "heading": "A product grid that feels curated instead of generic.",
+        "text": "<p>Once you connect real products, these cards become a polished merch block for launches, promotions, and best sellers.</p>",
+        "show_vendor": false,
+        "link_label": "Shop all products"
       }
     }
   },
   "order": [
-    "hero"
+    "hero",
+    "trust",
+    "collections",
+    "products"
   ]
 }

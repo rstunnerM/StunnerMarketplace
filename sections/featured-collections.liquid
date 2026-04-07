@@ -1,0 +1,248 @@
+<section class="featured-collections section-shell">
+  {% assign top_link = section.settings.link_url | default: routes.all_products_collection_url %}
+  <div class="featured-collections__top">
+    <div class="section-heading">
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="text-muted">{{ section.settings.text }}</div>
+      {% endif %}
+    </div>
+
+    {% if section.settings.link_label != blank %}
+      <a class="pill-link" href="{{ top_link }}">{{ section.settings.link_label }}</a>
+    {% endif %}
+  </div>
+
+  <div class="featured-collections__grid">
+    {% for block in section.blocks %}
+      {% assign featured_collection = block.settings.collection %}
+      {% assign collection_image = featured_collection.featured_image | default: featured_collection.products.first.featured_image %}
+
+      <a
+        class="featured-collections__card section-card motion-rise motion-rise-delay-{{ forloop.index }}"
+        {% if featured_collection != blank %}
+          href="{{ featured_collection.url }}"
+        {% else %}
+          href="{{ routes.all_products_collection_url }}"
+        {% endif %}
+        {{ block.shopify_attributes }}
+      >
+        <div class="featured-collections__media">
+          {% if collection_image %}
+            {% render 'image',
+              class: 'featured-collections__image',
+              image: collection_image,
+              width: 960,
+              height: 1080,
+              crop: 'center'
+            %}
+          {% else %}
+            <div class="featured-collections__placeholder">
+              <span>Collection image</span>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="featured-collections__content">
+          <p class="eyebrow">{{ block.settings.kicker | default: 'Collection' }}</p>
+          <h3>{{ featured_collection.title | default: block.settings.fallback_title }}</h3>
+          <p class="text-muted">
+            {{
+              featured_collection.description
+              | default: block.settings.fallback_text
+              | strip_html
+              | truncatewords: 18
+            }}
+          </p>
+          <span class="featured-collections__meta">
+            {% if featured_collection != blank %}
+              {{ featured_collection.products_count }} products
+            {% else %}
+              Curated edit
+            {% endif %}
+          </span>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .featured-collections__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .featured-collections__grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .featured-collections__card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 100%;
+    text-decoration: none;
+  }
+
+  .featured-collections__media {
+    overflow: hidden;
+    aspect-ratio: 0.9;
+  }
+
+  .featured-collections__image,
+  .featured-collections__image img,
+  .featured-collections__placeholder {
+    width: 100%;
+    height: 100%;
+  }
+
+  .featured-collections__image img {
+    object-fit: cover;
+    transition: transform 350ms ease;
+  }
+
+  .featured-collections__placeholder {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(255, 255, 255, 0.35));
+    color: var(--color-foreground-subtle);
+  }
+
+  .featured-collections__content {
+    display: grid;
+    gap: 0.8rem;
+    padding: 1.35rem;
+  }
+
+  .featured-collections__content .eyebrow {
+    margin-bottom: 0;
+  }
+
+  .featured-collections__meta {
+    color: var(--color-foreground-subtle);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .featured-collections__card:hover .featured-collections__image img {
+    transform: scale(1.04);
+  }
+
+  @media (max-width: 989px) {
+    .featured-collections__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-collections__top {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured collections",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop the edit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Collections designed for a more curated storefront."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Lead with your strongest categories so customers can move from inspiration to product discovery faster.</p>"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Browse all collections"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Kicker",
+          "default": "Curated"
+        },
+        {
+          "type": "text",
+          "id": "fallback_title",
+          "label": "Fallback title",
+          "default": "Collection title"
+        },
+        {
+          "type": "text",
+          "id": "fallback_text",
+          "label": "Fallback text",
+          "default": "Add a collection to show products, imagery, and a category description."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collections",
+      "blocks": [
+        {
+          "type": "collection",
+          "settings": {
+            "kicker": "New arrivals"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "kicker": "Best sellers"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "kicker": "Seasonal picks"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -29,7 +29,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="template-{{ request.page_type | handle }}">
+  <body class="template-{{ request.page_type | handle }} theme-mode-{{ settings.theme_mode }}">
     {% sections 'header-group' %}
 
     <main id="MainContent">

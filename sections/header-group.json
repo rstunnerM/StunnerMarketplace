@@ -11,6 +11,38 @@
   "type": "header",
   "name": "t:general.header",
   "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "blocks": {
+        "message_1": {
+          "type": "message",
+          "settings": {
+            "label": "New drop",
+            "text": "Fresh campaign-ready sections are live now."
+          }
+        },
+        "message_2": {
+          "type": "message",
+          "settings": {
+            "label": "Shipping",
+            "text": "Free shipping on orders over $100."
+          }
+        },
+        "message_3": {
+          "type": "message",
+          "settings": {
+            "label": "Returns",
+            "text": "Easy 30-day returns."
+          }
+        }
+      },
+      "block_order": [
+        "message_1",
+        "message_2",
+        "message_3"
+      ],
+      "settings": {}
+    },
     "header": {
       "type": "header",
       "settings": {
@@ -20,6 +52,7 @@
     }
   },
   "order": [
+    "announcement",
     "header"
   ],
 }

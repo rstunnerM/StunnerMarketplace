@@ -1,6 +1,11 @@
 <section class="hero-banner full-width">
   <div class="hero-banner__inner section-shell">
-    <div class="hero-banner__copy">
+    {% liquid
+      assign primary_link = section.settings.primary_link | default: routes.all_products_collection_url
+      assign secondary_link = section.settings.secondary_link | default: routes.all_products_collection_url
+    %}
+
+    <div class="hero-banner__copy motion-rise">
       {% if section.settings.eyebrow != blank %}
         <p class="eyebrow">{{ section.settings.eyebrow }}</p>
       {% endif %}
@@ -14,12 +19,12 @@
       {% endif %}
 
       <div class="hero-banner__actions">
-        {% if section.settings.primary_label != blank and section.settings.primary_link != blank %}
-          <a class="button" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label }}</a>
+        {% if section.settings.primary_label != blank %}
+          <a class="button" href="{{ primary_link }}">{{ section.settings.primary_label }}</a>
         {% endif %}
 
-        {% if section.settings.secondary_label != blank and section.settings.secondary_link != blank %}
-          <a class="button button--secondary" href="{{ section.settings.secondary_link }}">
+        {% if section.settings.secondary_label != blank %}
+          <a class="button button--secondary" href="{{ secondary_link }}">
             {{ section.settings.secondary_label }}
           </a>
         {% endif %}
@@ -28,7 +33,7 @@
       {% if section.blocks.size > 0 %}
         <div class="hero-banner__highlights">
           {% for block in section.blocks %}
-            <div class="hero-banner__highlight section-card" {{ block.shopify_attributes }}>
+            <div class="hero-banner__highlight section-card motion-rise motion-rise-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
               <p class="hero-banner__highlight-title">{{ block.settings.title }}</p>
               <p class="text-muted">{{ block.settings.text }}</p>
             </div>
@@ -37,7 +42,7 @@
       {% endif %}
     </div>
 
-    <div class="hero-banner__media">
+    <div class="hero-banner__media motion-rise motion-rise-delay-2">
       {% if section.settings.image %}
         {{
           section.settings.image
@@ -63,14 +68,44 @@
 
 {% stylesheet %}
   .hero-banner {
+    position: relative;
+    overflow: clip;
     background:
-      radial-gradient(circle at top right, var(--color-accent-soft), transparent 32%),
-      linear-gradient(180deg, var(--color-surface), var(--color-background));
+      radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.96), transparent 32%),
+      radial-gradient(circle at 85% 12%, rgba(124, 58, 237, 0.18), transparent 28%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.3) 40%, transparent 100%);
+  }
+
+  .hero-banner::before,
+  .hero-banner::after {
+    content: '';
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(40px);
+  }
+
+  .hero-banner::before {
+    top: 4rem;
+    right: -6rem;
+    width: 18rem;
+    height: 18rem;
+    background: rgba(124, 58, 237, 0.14);
+  }
+
+  .hero-banner::after {
+    bottom: 1rem;
+    left: -4rem;
+    width: 14rem;
+    height: 14rem;
+    background: rgba(59, 130, 246, 0.1);
   }
 
   .hero-banner__inner {
     display: grid;
     grid-template-columns: var(--content-grid);
+    position: relative;
+    z-index: 1;
   }
 
   .hero-banner__copy,
@@ -80,36 +115,54 @@
 
   .hero-banner__copy {
     display: grid;
-    gap: 1.5rem;
+    gap: 1.75rem;
     max-width: 42rem;
     padding-right: 2rem;
   }
 
+  .hero-banner h1 {
+    max-width: 11ch;
+  }
+
   .hero-banner__text {
-    max-width: 56ch;
-    font-size: 1.05rem;
+    max-width: 54ch;
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
   }
 
   .hero-banner__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+    padding-top: 0.25rem;
   }
 
   .hero-banner__highlights {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 1.1rem;
+    margin-top: 1.25rem;
   }
 
   .hero-banner__highlight {
-    padding: 1.25rem;
+    position: relative;
+    min-height: 100%;
+    padding: 1.35rem;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      border-color 180ms ease;
   }
 
   .hero-banner__highlight-title {
     margin-bottom: 0.5rem;
-    font-weight: 700;
+    font-size: 1.02rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-banner__highlight:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 50px rgba(24, 20, 17, 0.09);
   }
 
   .hero-banner__media {
@@ -119,12 +172,13 @@
   .hero-banner__image,
   .hero-banner__placeholder {
     width: 100%;
-    min-height: 28rem;
-    border-radius: clamp(1.5rem, 3vw, 2rem);
+    min-height: 34rem;
+    border-radius: clamp(1.75rem, 3vw, 2.5rem);
   }
 
   .hero-banner__image {
     object-fit: cover;
+    box-shadow: 0 35px 80px rgba(24, 20, 17, 0.18);
   }
 
   .hero-banner__placeholder {
@@ -132,13 +186,19 @@
     align-content: center;
     gap: 1rem;
     padding: clamp(2rem, 5vw, 4rem);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(244, 238, 255, 0.74)),
+      linear-gradient(180deg, rgba(124, 58, 237, 0.08), transparent);
+    box-shadow:
+      0 30px 70px rgba(24, 20, 17, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
   }
 
   @media (min-width: 990px) {
     .hero-banner__inner {
       align-items: center;
       grid-template-columns: var(--content-margin) minmax(0, 1fr) minmax(340px, 44rem) var(--content-margin);
-      column-gap: 3rem;
+      column-gap: 4rem;
     }
 
     .hero-banner__copy {
@@ -157,9 +217,31 @@
       padding-right: 0;
     }
 
+    .hero-banner h1 {
+      max-width: 12ch;
+    }
+
+    .hero-banner__image,
+    .hero-banner__placeholder {
+      min-height: 26rem;
+    }
+
     .hero-banner__highlights {
       grid-template-columns: 1fr;
     }
+  }
+
+  body.theme-mode-luxury .hero-banner {
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.06), transparent 22%),
+      radial-gradient(circle at 85% 12%, rgba(212, 168, 93, 0.18), transparent 24%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 42%);
+  }
+
+  body.theme-mode-luxury .hero-banner__placeholder {
+    background:
+      linear-gradient(135deg, rgba(212, 168, 93, 0.08), rgba(255, 255, 255, 0.03)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
   }
 {% endstylesheet %}
 

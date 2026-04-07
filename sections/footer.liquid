@@ -32,8 +32,8 @@
 
 {% stylesheet %}
   .site-footer {
-    margin-block: 2rem;
-    padding: 2rem;
+    margin-block: 2rem 1rem;
+    padding: clamp(1.75rem, 3vw, 2.5rem);
   }
   .site-footer a {
     text-decoration: none;
@@ -53,8 +53,9 @@
   }
   .site-footer__heading {
     margin-bottom: 0.75rem;
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
   }
   .site-footer__subtext {
     max-width: 42ch;
@@ -65,9 +66,22 @@
     gap: 1rem;
     flex-wrap: wrap;
   }
+  .site-footer__links a {
+    color: var(--color-foreground-subtle);
+    font-weight: 600;
+  }
+  .site-footer__links a:hover {
+    color: var(--color-foreground);
+  }
   .site-footer__payment svg {
     width: 2rem;
+    opacity: 0.72;
   }
+
+  body.theme-mode-luxury .site-footer__payment svg {
+    opacity: 0.86;
+  }
+
   @media (max-width: 749px) {
     .site-footer,
     .site-footer__grid,

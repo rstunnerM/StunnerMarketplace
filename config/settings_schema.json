@@ -57,6 +57,22 @@
     "name": "Brand Colors",
     "settings": [
       {
+        "type": "select",
+        "id": "theme_mode",
+        "label": "Theme mode",
+        "options": [
+          {
+            "value": "light",
+            "label": "Light editorial"
+          },
+          {
+            "value": "luxury",
+            "label": "Dark luxury"
+          }
+        ],
+        "default": "light"
+      },
+      {
         "type": "color",
         "id": "background_color",
         "default": "#f7f4ee",
@@ -85,6 +101,40 @@
         "id": "accent_contrast_color",
         "default": "#ffffff",
         "label": "Accent contrast"
+      },
+      {
+        "type": "header",
+        "content": "Luxury mode colors"
+      },
+      {
+        "type": "color",
+        "id": "background_color_luxury",
+        "default": "#0b0b11",
+        "label": "Luxury background"
+      },
+      {
+        "type": "color",
+        "id": "foreground_color_luxury",
+        "default": "#f5efe6",
+        "label": "Luxury foreground"
+      },
+      {
+        "type": "color",
+        "id": "surface_color_luxury",
+        "default": "#14141d",
+        "label": "Luxury surface"
+      },
+      {
+        "type": "color",
+        "id": "accent_color_luxury",
+        "default": "#d4a85d",
+        "label": "Luxury accent"
+      },
+      {
+        "type": "color",
+        "id": "accent_contrast_color_luxury",
+        "default": "#111111",
+        "label": "Luxury accent contrast"
       },
       {
         "type": "range",
